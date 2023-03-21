@@ -1,0 +1,13 @@
+name: who_am_i
+title: who_am_i
+username:
+account: engineeringdecisionanalysis
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8623955
+bundleId: 6985049
+url: https://domdf.shinyapps.io/who_am_i/
+when: 1679364628.91521
+lastSyncTime: 1679364628.91522
+asMultiple: FALSE
+asStatic: FALSE
