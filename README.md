@@ -8,5 +8,5 @@ A simple football trivia game, written as a web application in `R` using the `sh
 
  - The fewer clues needed to arrive at the correct answer - the higher your score!
 
-Play here: https://domdf.shinyapps.io/who_am_i/
+Play here: https://allyourbayes.com/posts/who_am_i/
 
