@@ -80,7 +80,7 @@ server <- function(input, output, session) {
   
   # Display the current score
   output$score <- renderText({
-    score <- round((1 - (current_clue_index() - 1) / length(clues)) * 100, 2)
+    score <- round((1 - (current_clue_index() - 1) / length(clues)) * 100, 0)
     paste0(score, "%")
   })
   
