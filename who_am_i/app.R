@@ -1,10 +1,12 @@
 # Load the required library
 library(shiny); library(shinyjs)
 
-#setwd("~/Github/who_am_i")
 data <- readLines("clues.txt")
 
-target_player <- data[1]; clues <- data[2:length(data)]
+targets <- strsplit(x = data[1], split = ", ") |> unlist(); clues <- data[2:length(data)]
+target_player <- targets[1]
+
+max_acceptable_Levenshtein_distance <- 3
 
 # Define the UI for the app
 ui <- fluidPage(
@@ -84,9 +86,9 @@ server <- function(input, output, session) {
   
   # Update the result text and reveal the next clue when the "Submit Guess" button is clicked
   observeEvent(input$submit_guess, {
-    if (input$guess == target_player) {
+    if (adist(input$guess, targets) |> min() <= max_acceptable_Levenshtein_distance) {
       updateTextInput(session, "guess", value = "")
-      text_result <- paste("Congratulations! It's ", target_player, "!")
+      text_result <- paste0("Congratulations! It's ", target_player, "!")
       shinyjs::disable("submit_guess")
     } else {
       updateTextInput(session, "guess", value = "")
