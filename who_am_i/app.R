@@ -88,11 +88,15 @@ server <- function(input, output, session) {
   observeEvent(input$submit_guess, {
     if (adist(input$guess, targets) |> min() <= max_acceptable_Levenshtein_distance) {
       updateTextInput(session, "guess", value = "")
-      text_result <- paste0("Congratulations! It's ", target_player, "!")
+      text_result <- paste0("\nCongratulations! It's ", target_player, "!")
       shinyjs::disable("submit_guess")
     } else {
       updateTextInput(session, "guess", value = "")
-      text_result <- "Incorrect. Please try again."
+      if (current_clue_index() < length(clues)) {
+        text_result <- "Incorrect. Please try again."
+      } else {
+        text_result <- ""
+      }
       
       if (current_clue_index() < length(clues)) {
         current_clue_index(current_clue_index() + 1)

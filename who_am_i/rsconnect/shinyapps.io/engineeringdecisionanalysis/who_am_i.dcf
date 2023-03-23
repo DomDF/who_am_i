@@ -5,9 +5,9 @@ account: engineeringdecisionanalysis
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8623955
-bundleId: 6990744
+bundleId: 6995192
 url: https://domdf.shinyapps.io/who_am_i/
-when: 1679462722.67189
-lastSyncTime: 1679462722.6719
+when: 1679529200.52442
+lastSyncTime: 1679529200.52444
 asMultiple: FALSE
 asStatic: FALSE
