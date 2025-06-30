@@ -532,7 +532,7 @@ ui <- fluidPage(
   ),
   
   # Add JavaScript for theme switching and interactivity
-  tags$script("
+  tags$script(HTML("
     // Initialize theme from localStorage if available
     $(document).ready(function() {
       const savedTheme = localStorage.getItem('footballGameTheme');
@@ -542,8 +542,8 @@ ui <- fluidPage(
       }
     });
     
-    // Handle dark mode toggle
-    $(document).on('click', '#toggle_mode', function() {
+    // Handle theme toggle via Shiny custom message
+    Shiny.addCustomMessageHandler('toggle-theme', function(message) {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       
@@ -571,12 +571,19 @@ ui <- fluidPage(
     });
     
     // Handle Enter key press - only in the guess input field
-    $(document).on('keydown', '#guess', function(e) {
+    $(document).on('keypress', '#guess', function(e) {
       if(e.which == 13 || e.keyCode == 13) {
+        e.preventDefault();
+        
+        // Only submit if button is enabled
         if (!$('#submit_guess').prop('disabled')) {
-          e.preventDefault();
-          e.stopPropagation();
-          $('#submit_guess').click();
+          // Force Shiny to update the input value before clicking
+          Shiny.setInputValue('guess', $(this).val(), {priority: 'event'});
+          
+          // Small delay to ensure value is synced
+          setTimeout(function() {
+            $('#submit_guess').click();
+          }, 50);
         }
         return false;
       }
@@ -590,7 +597,7 @@ ui <- fluidPage(
         }
       }, 200);
     });
-  ")
+  "))
 )
 
 # Server logic
@@ -608,6 +615,11 @@ server <- function(input, output, session) {
   
   # Hide the guess history initially (will show after first guess)
   shinyjs::hide("guess-history")
+  
+  # Handle dark mode toggle
+  observeEvent(input$toggle_mode, {
+    session$sendCustomMessage(type = "toggle-theme", message = list())
+  })
   
   # Display the clue counter
   output$clue_count <- renderText({
