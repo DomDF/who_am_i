@@ -1,0 +1,10 @@
+name: who_am_i
+title:
+username: domdf
+account: domdf
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8623955
+bundleId: 10542741
+url: https://domdf.shinyapps.io/who_am_i/
+version: 1
